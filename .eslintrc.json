@@ -1,0 +1,7 @@
+{
+  "env": {"browser": true,"node":true, "es6": true},
+  "extends": "./node_modules/aurelia-tools/.eslintrc.json",
+  "rules": {
+    "no-empty": 0
+  }
+}
