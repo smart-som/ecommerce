@@ -20,6 +20,7 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.7.1",
     "cloudinary": "^1.29.0",
+    "flutterwave-node": "^1.2.2",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.4.1",
