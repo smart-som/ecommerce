@@ -366,6 +366,9 @@ function Order({ params }) {
                         variant="contained"
                         color="primary"
                         fullWidth 
+                        createOrder={createOrder}
+                        handlePaystackSuccessAction={handlePaystackSuccessAction}
+                        onError={onError}
                         >
                           PAY NOW
                         </PaystackButton>
