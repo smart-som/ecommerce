@@ -25,8 +25,7 @@ import { useRouter } from 'next/router';
 import useStyles from '../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { getError } from '../../utils/error';
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import { usePaystackPayment } from 'react-paystack';
+import { PaystackButton } from 'react-paystack';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -64,7 +63,6 @@ function reducer(state, action) {
 
 function Order({ params }) {
   const orderId = params.id;
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const classes = useStyles();
   const router = useRouter();
   const { state } = useContext(Store);
@@ -120,26 +118,11 @@ function Order({ params }) {
       if (successDeliver) {
         dispatch({ type: 'DELIVER_RESET' });
       }
-    } else {
-      const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get('/api/keys/paypal', {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        });
-        paypalDispatch({
-          type: 'resetOptions',
-          value: {
-            'client-id': clientId,
-            currency: 'NGN',
-          },
-        });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-      };
-      loadPaypalScript();
     }
   }, [order, successPay, successDeliver]);
   const { enqueueSnackbar } = useSnackbar();
 
-  function createOrder(data, actions, reference) {
+  function createOrder(_data, actions, _reference) {
     return actions.order
       .create({
         purchase_units: [
@@ -152,7 +135,15 @@ function Order({ params }) {
         return orderID;
       });
   }
-  function onApprove(data, actions) {
+
+  const config = {
+    reference: (new Date()).getTime().toString(),
+    email: "user@example.com",
+    amount: totalPrice*100,
+    publicKey: 'pk_test_61345d9fe9b6ab58ecd8ad355b3a076e521bbb31',
+  };
+
+  function handlePaystackSuccessAction(_data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch({ type: 'PAY_REQUEST' });
@@ -172,9 +163,20 @@ function Order({ params }) {
     });
   }
 
+  const handlePaystackCloseAction = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed')
+  }
+
   function onError(err) {
     enqueueSnackbar(getError(err), { variant: 'error' });
   }
+
+  const componentProps = {
+    ...config,
+    onSuccess: (reference) => handlePaystackSuccessAction(reference),
+    onClose: handlePaystackCloseAction,
+};
 
   async function deliverOrderHandler() {
     try {
@@ -214,19 +216,11 @@ function Order({ params }) {
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                  {shippingAddress.city}, {shippingAddress.postalCode},{' '}
-                  {shippingAddress.phoneNumber}, {shippingAddress.country}
-                  {/* &nbsp;
-                  {shippingAddress.location && (
-                    <Link
-                      variant="button"
-                      target="_new"
-                      href={`https://maps.google.com?q=${shippingAddress.location.lat},${shippingAddress.location.lng}`}
-                    >
-                      Show On Map
-                    </Link>
-                  )} */}
+                {shippingAddress.fullName}, {shippingAddress.address},{' '}
+                {shippingAddress.city}, {shippingAddress.postalCode},{' '}
+                {shippingAddress.phoneNumber}, {shippingAddress.country}
+                </ListItem>
+                <ListItem>
                 </ListItem>
                 <ListItem>
                   Status:{' '}
@@ -247,6 +241,16 @@ function Order({ params }) {
                 <ListItem>
                   Status: {isPaid ? `paid at ${paidAt}` : 'not paid'}
                 </ListItem>
+              </List>
+            </Card>
+            <Card className={classes.section}>
+              <List>
+                <ListItem>
+                  <Typography component="h2" variant="h2">
+                    Phone Number
+                  </Typography>
+                </ListItem>
+                <ListItem>{shippingAddress.phoneNumber}</ListItem>
               </List>
             </Card>
             <Card className={classes.section}>
@@ -355,21 +359,19 @@ function Order({ params }) {
                     </Grid>
                   </Grid>
                 </ListItem>
-                {!isPaid && (
+        
                   <ListItem>
-                    {isPending ? (
-                      <CircularProgress />
-                    ) : (
                       <div className={classes.fullWidth}>
-                        <PayPalButtons
-                          createOrder={createOrder}
-                          onApprove={onApprove}
-                          onError={onError}
-                        ></PayPalButtons>
+                        <PaystackButton {...componentProps} 
+                        variant="contained"
+                        color="primary"
+                        fullWidth 
+                        >
+                          PAY NOW
+                        </PaystackButton>
                       </div>
-                    )}
                   </ListItem>
-                )}
+                
                 {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                   <ListItem>
                     {loadingDeliver && <CircularProgress />}

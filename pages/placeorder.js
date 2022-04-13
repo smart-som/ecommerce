@@ -34,7 +34,7 @@ function PlaceOrder() {
   const { state, dispatch } = useContext(Store);
   const {
     userInfo,
-    cart: { cartItems, shippingAddress, paymentMethod },
+    cart: { cartItems, shippingAddress, paymentMethod, phoneNumber },
   } = state;
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.456 => 123.46
   const itemsPrice = round2(
@@ -64,6 +64,7 @@ function PlaceOrder() {
         {
           orderItems: cartItems,
           shippingAddress,
+          phoneNumber,
           paymentMethod,
           itemsPrice,
           shippingPrice,
