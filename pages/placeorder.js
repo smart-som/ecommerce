@@ -119,6 +119,16 @@ function PlaceOrder() {
             </List>
           </Card>
           <Card className={classes.section}>
+              <List>
+                <ListItem>
+                  <Typography component="h2" variant="h2">
+                    Phone Number
+                  </Typography>
+                </ListItem>
+                <ListItem>{shippingAddress.phoneNumber}</ListItem>
+              </List>
+            </Card>
+          <Card className={classes.section}>
             <List>
               <ListItem>
                 <Typography component="h2" variant="h2">
