@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import { ArrowRightRounded } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
   navbar: {
     backgroundColor: '#2E8BC0',
@@ -59,13 +60,15 @@ const useStyles = makeStyles((theme) => ({
   mt1: { marginTop: '1rem' },
   // search
   searchSection: {
-    display: 'none',
+    display:'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
   },
   searchForm: {
-    border: '1px solid #ffffff',
+    // border: '1px solid #ffffff',
     backgroundColor: '#ffffff',
     borderRadius: 5,
   },
@@ -77,30 +80,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   iconButton: {
-    backgroundColor: '#f8c040',
+    backgroundColor: '#145DA0',
     padding: 5,
     borderRadius: '0 5px 5px 0',
     '& span': {
-      color: '#000000',
+      color: '#B2BEB5',
     },
   },
   sort: {
     marginRight: 5,
   },
-  PaystackButton: {
-    cursor: 'pointer',
-    textAlign: 'center',
-    fontSize: '10px',
-    letterSpacing: '0.1rem',
-    textTransform: 'uppercase',
-    backgroundColor: '#bfbfbf',
-    fontWeight: 'bold',
-    color: '#e0eafc',
-    border: 'none',
-    borderRadius: '5px',
-    width: '100%',
-    height: '45px',
-    marginTop:'40px',
-  },
+ 
 }));
 export default useStyles;

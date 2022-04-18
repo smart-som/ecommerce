@@ -135,15 +135,15 @@ function Order({ params }) {
         return orderID;
       });
   }
-
+  
   const config = {
     reference: (new Date()).getTime().toString(),
-    email: "user@example.com",
+    email: shippingAddress,
     amount: totalPrice*100,
     publicKey: 'pk_test_61345d9fe9b6ab58ecd8ad355b3a076e521bbb31',
   };
 
-  function handlePaystackSuccessAction(_data, actions) {
+  function handlePaystackSuccessAction(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch({ type: 'PAY_REQUEST' });
@@ -217,11 +217,10 @@ function Order({ params }) {
                 </ListItem>
                 <ListItem>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                {shippingAddress.city}, {shippingAddress.postalCode},{' '}
+                {shippingAddress.city}, {shippingAddress.email},{' '}
                 {shippingAddress.phoneNumber}, {shippingAddress.country}
                 </ListItem>
-                <ListItem>
-                </ListItem>
+               
                 <ListItem>
                   Status:{' '}
                   {isDelivered

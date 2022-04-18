@@ -34,21 +34,21 @@ export default function Shipping() {
     setValue('fullName', shippingAddress.fullName);
     setValue('address', shippingAddress.address);
     setValue('city', shippingAddress.city);
-    setValue('postalCode', shippingAddress.postalCode);
-    setValue('country', shippingAddress.country);
+    setValue('email', shippingAddress.email);
     setValue('phoneNumber', shippingAddress.phoneNumber);
+    setValue('country', shippingAddress.country);
   }, []);
   const classes = useStyles();
-  const submitHandler = ({ fullName, address, city, postalCode, phoneNumber, country }) => {
+  const submitHandler = ({ fullName, address, city, email, phoneNumber, country }) => {
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, city, postalCode, phoneNumber, country },
+      payload: { fullName, address, city, email, phoneNumber, country },
     });
     Cookies.set(' shippingAddress ', {
       fullName,
       address,
       city,
-      postalCode,
+      email,
       phoneNumber,
       country,
     });
@@ -148,25 +148,25 @@ export default function Shipping() {
           </ListItem>
           <ListItem>
             <Controller
-              name="postalCode"
+              name="email"
               control={control}
               defaultValue=""
               rules={{
-                required: false,
+                required: true,
                 minLength: 2,
               }}
               render={({ field }) => (
                 <TextField
                   variant="outlined"
                   fullWidth
-                  id="postalCode"
-                  label="Postal Code"
-                  error={Boolean(errors.postalCode)}
+                  id="email"
+                  label="Email"
+                  error={Boolean(errors.email)}
                   helperText={
-                    errors.postalCode
-                      ? errors.postalCode.type === 'minLength'
-                        ? 'Postal Code length is more than 1'
-                        : 'Postal Code is required'
+                    errors.email
+                      ? errors.email.type === 'minLength'
+                        ? 'Email length is more than 1'
+                        : 'Email is required'
                       : ''
                   }
                   {...field}
@@ -189,12 +189,12 @@ export default function Shipping() {
                   fullWidth
                   id="phoneNumber"
                   label="Phone Number"
-                  error={Boolean(errors.postalCode)}
+                  error={Boolean(errors.phoneNumber)}
                   helperText={
-                    errors.postalCode
-                      ? errors.postalCode.type === 'minLength'
-                        ? 'Postal Code length is more than 10'
-                        : 'Postal Code is required'
+                    errors.phoneNumber
+                      ? errors.phoneNumber.type === 'minLength'
+                        ? 'Phone Number length is more than 11'
+                        : 'Phone Number is required'
                       : ''
                   }
                   {...field}

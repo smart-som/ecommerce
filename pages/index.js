@@ -46,7 +46,9 @@ export default function Home(props) {
           </NextLink>
         ))}
       </Carousel>
-
+      <br />
+      <br />
+      <br />
       <Typography variant="h2">Popular Products</Typography>
       <Grid container spacing={3}>
         {topRatedProducts.map((product) => (
