@@ -122,7 +122,7 @@ function Order({ params }) {
   }, [order, successPay, successDeliver]);
   const { enqueueSnackbar } = useSnackbar();
 
-  function createOrder(_data, actions, _reference) {
+  function createOrder(data, actions) {
     return actions.order
       .create({
         purchase_units: [
@@ -138,7 +138,7 @@ function Order({ params }) {
   
   const config = {
     reference: (new Date()).getTime().toString(),
-    email: shippingAddress,
+    email: 'user@email.com',
     amount: totalPrice*100,
     publicKey: 'pk_test_61345d9fe9b6ab58ecd8ad355b3a076e521bbb31',
   };
@@ -159,12 +159,13 @@ function Order({ params }) {
       } catch (err) {
         dispatch({ type: 'PAY_FAIL', payload: getError(err) });
         enqueueSnackbar(getError(err), { variant: 'error' });
+
       }
     });
   }
 
   const handlePaystackCloseAction = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
+    // enqueueSnackbar(getError(err), { variant: 'error' });
     console.log('closed')
   }
 
@@ -174,7 +175,7 @@ function Order({ params }) {
 
   const componentProps = {
     ...config,
-    onSuccess: (reference) => handlePaystackSuccessAction(reference),
+    onSuccess: (data, actions) => handlePaystackSuccessAction(data, actions),
     onClose: handlePaystackCloseAction,
 };
 
@@ -250,6 +251,16 @@ function Order({ params }) {
                   </Typography>
                 </ListItem>
                 <ListItem>{shippingAddress.phoneNumber}</ListItem>
+              </List>
+            </Card>
+            <Card className={classes.section}>
+              <List>
+                <ListItem>
+                  <Typography component="h2" variant="h2">
+                    Email
+                  </Typography>
+                </ListItem>
+                <ListItem>{shippingAddress.email}</ListItem>
               </List>
             </Card>
             <Card className={classes.section}>
