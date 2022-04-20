@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core'; 
 import { getError } from '../../utils/error';
 import { Store } from '../../utils/Store';
-import Layout from '../../components/Layout';
+import Layout from '../../../components/Layout';
 import useStyles from '../../utils/styles';
 import {
   Chart as ChartJS,
