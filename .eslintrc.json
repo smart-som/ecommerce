@@ -16,7 +16,7 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "prettier",
-    "./node_modules/aurelia-tools/.eslintrc.json"
+    "./aurelia-tools/.eslintrc.json"
   ],
   "settings": {
     "import/resolver": {
