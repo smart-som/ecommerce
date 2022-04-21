@@ -21,8 +21,10 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.7.1",
     "cloudinary": "^1.29.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-markdown": "^2.2.1",
     "eslint-plugin-prettier": "^4.0.0",
     "flutterwave-node": "^1.2.2",
     "js-cookie": "^3.0.1",
@@ -47,7 +49,7 @@
     "streamifier": "^0.1.1"
   },
   "devDependencies": {
-    "eslint": "^8.10.0",
+    "eslint": "^8.13.0",
     "eslint-config-next": "12.1.0",
     "webpack": "^4.46.0"
   }
