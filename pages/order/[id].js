@@ -26,7 +26,6 @@ import useStyles from '../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { getError } from '../../utils/error';
 import { PaystackButton } from 'react-paystack';
-
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -60,14 +59,12 @@ function reducer(state, action) {
       state;
   }
 }
-
 function Order({ params }) {
   const orderId = params.id;
   const classes = useStyles();
   const router = useRouter();
   const { state } = useContext(Store);
   const { userInfo } = state;
-
   const [
     { loading, error, order, successPay, loadingDeliver, successDeliver },
     dispatch,
@@ -89,7 +86,6 @@ function Order({ params }) {
     isDelivered,
     deliveredAt,
   } = order;
-
   useEffect(() => {
     if (!userInfo) {
       return router.push('/login');
@@ -97,7 +93,7 @@ function Order({ params }) {
     const fetchOrder = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/orders/${order._Id}`, {
+        const { data } = await axios.get(`/api/orders/${orderId}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -135,7 +131,7 @@ function Order({ params }) {
         return orderID;
       });
   }
-  
+
   const config = {
     reference: (new Date()).getTime().toString(),
     email: 'user@email.com',
@@ -175,240 +171,236 @@ function Order({ params }) {
 
   const componentProps = {
     ...config,
-    onSuccess: (data, actions) => handlePaystackSuccessAction(data, actions),
+    onSuccess: (reference) => handlePaystackSuccessAction(reference),
     onClose: handlePaystackCloseAction,
 };
 
-  async function deliverOrderHandler() {
-    try {
-      dispatch({ type: 'DELIVER_REQUEST' });
-      const { data } = await axios.put(
-        `/api/orders/${order._id}/deliver`,
-        {},
-        {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        }
-      );
-      dispatch({ type: 'DELIVER_SUCCESS', payload: data });
-      enqueueSnackbar('Order is delivered', { variant: 'success' });
-    } catch (err) {
-      dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
-      enqueueSnackbar(getError(err), { variant: 'error' });
-    }
+async function deliverOrderHandler() {
+  try {
+    dispatch({ type: 'DELIVER_REQUEST' });
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/deliver`,
+      {},
+      {
+        headers: { authorization: `Bearer ${userInfo.token}` },
+      }
+    );
+    dispatch({ type: 'DELIVER_SUCCESS', payload: data });
+    enqueueSnackbar('Order is delivered', { variant: 'success' });
+  } catch (err) {
+    dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
+    enqueueSnackbar(getError(err), { variant: 'error' });
   }
-
-  return (
-    <Layout title={`Order ${orderId}`}>
-      <Typography component="h1" variant="h1">
-        Order {orderId}
-      </Typography>
-      {loading ? (
-        <CircularProgress />
-      ) : error ? (
-        <Typography className={classes.error}>{error}</Typography>
-      ) : (
-        <Grid container spacing={1}>
-          <Grid item md={9} xs={12}>
-            <Card className={classes.section}>
-              <List>
-                <ListItem>
-                  <Typography component="h2" variant="h2">
-                    Shipping Address
-                  </Typography>
-                </ListItem>
-                <ListItem>
-                {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                {shippingAddress.city}, {shippingAddress.email},{' '}
-                {shippingAddress.phoneNumber}, {shippingAddress.country}
-                </ListItem>
-               
-                <ListItem>
-                  Status:{' '}
-                  {isDelivered
-                    ? `delivered at ${deliveredAt}`
-                    : 'not delivered'}
-                </ListItem>
-              </List>
-            </Card>
-            <Card className={classes.section}>
-              <List>
-                <ListItem>
-                  <Typography component="h2" variant="h2">
-                    Payment Method
-                  </Typography>
-                </ListItem>
-                <ListItem>{paymentMethod}</ListItem>
-                <ListItem>
-                  Status: {isPaid ? `paid at ${paidAt}` : 'not paid'}
-                </ListItem>
-              </List>
-            </Card>
-            <Card className={classes.section}>
-              <List>
-                <ListItem>
-                  <Typography component="h2" variant="h2">
-                    Phone Number
-                  </Typography>
-                </ListItem>
-                <ListItem>{shippingAddress.phoneNumber}</ListItem>
-              </List>
-            </Card>
-            <Card className={classes.section}>
-              <List>
-                <ListItem>
-                  <Typography component="h2" variant="h2">
-                    Email
-                  </Typography>
-                </ListItem>
-                <ListItem>{shippingAddress.email}</ListItem>
-              </List>
-            </Card>
-            <Card className={classes.section}>
-              <List>
-                <ListItem>
-                  <Typography component="h2" variant="h2">
-                    Order Items
-                  </Typography>
-                </ListItem>
-                <ListItem>
-                  <TableContainer>
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Image</TableCell>
-                          <TableCell>Name</TableCell>
-                          <TableCell align="right">Quantity</TableCell>
-                          <TableCell align="right">Price</TableCell>
+}
+return (
+  <Layout title={`Order ${orderId}`}>
+    <Typography component="h1" variant="h1">
+      Order {orderId}
+    </Typography>
+    {loading ? (
+      <CircularProgress />
+    ) : error ? (
+      <Typography className={classes.error}>{error}</Typography>
+    ) : (
+      <Grid container spacing={1}>
+        <Grid item md={9} xs={12}>
+          <Card className={classes.section}>
+            <List>
+              <ListItem>
+                <Typography component="h2" variant="h2">
+                  Shipping Address
+                </Typography>
+              </ListItem>
+              <ListItem>
+              {shippingAddress.fullName}, {shippingAddress.address},{' '}
+              {shippingAddress.city}, {shippingAddress.email},{' '}
+              {shippingAddress.phoneNumber}, {shippingAddress.country}
+              </ListItem>
+             
+              <ListItem>
+                Status:{' '}
+                {isDelivered
+                  ? `delivered at ${deliveredAt}`
+                  : 'not delivered'}
+              </ListItem>
+            </List>
+          </Card>
+          <Card className={classes.section}>
+            <List>
+              <ListItem>
+                <Typography component="h2" variant="h2">
+                  Payment Method
+                </Typography>
+              </ListItem>
+              <ListItem>{paymentMethod}</ListItem>
+              <ListItem>
+                Status: {isPaid ? `paid at ${paidAt}` : 'not paid'}
+              </ListItem>
+            </List>
+          </Card>
+          <Card className={classes.section}>
+            <List>
+              <ListItem>
+                <Typography component="h2" variant="h2">
+                  Phone Number
+                </Typography>
+              </ListItem>
+              <ListItem>{shippingAddress.phoneNumber}</ListItem>
+            </List>
+          </Card>
+          <Card className={classes.section}>
+            <List>
+              <ListItem>
+                <Typography component="h2" variant="h2">
+                  Email
+                </Typography>
+              </ListItem>
+              <ListItem>{shippingAddress.email}</ListItem>
+            </List>
+          </Card>
+          <Card className={classes.section}>
+            <List>
+              <ListItem>
+                <Typography component="h2" variant="h2">
+                  Order Items
+                </Typography>
+              </ListItem>
+              <ListItem>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Image</TableCell>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Quantity</TableCell>
+                        <TableCell align="right">Price</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {orderItems.map((item) => (
+                        <TableRow key={item._id}>
+                          <TableCell>
+                            <NextLink href={`/product/${item.slug}`} passHref>
+                              <Link>
+                                <Image
+                                  src={item.image}
+                                  alt={item.name}
+                                  width={50}
+                                  height={50}
+                                ></Image>
+                              </Link>
+                            </NextLink>
+                          </TableCell>
+                          <TableCell>
+                            <NextLink href={`/product/${item.slug}`} passHref>
+                              <Link>
+                                <Typography>{item.name}</Typography>
+                              </Link>
+                            </NextLink>
+                          </TableCell>
+                          <TableCell align="right">
+                            <Typography>{item.quantity}</Typography>
+                          </TableCell>
+                          <TableCell align="right">
+                            <Typography>₦{item.price}</Typography>
+                          </TableCell>
                         </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {orderItems.map((item) => (
-                          <TableRow key={item._id}>
-                            <TableCell>
-                              <NextLink href={`/product/${item.slug}`} passHref>
-                                <Link>
-                                  <Image
-                                    src={item.image}
-                                    alt={item.name}
-                                    width={50}
-                                    height={50}
-                                  ></Image>
-                                </Link>
-                              </NextLink>
-                            </TableCell>
-
-                            <TableCell>
-                              <NextLink href={`/product/${item.slug}`} passHref>
-                                <Link>
-                                  <Typography>{item.name}</Typography>
-                                </Link>
-                              </NextLink>
-                            </TableCell>
-                            <TableCell align="right">
-                              <Typography>{item.quantity}</Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                              <Typography>₦{item.price}</Typography>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </ListItem>
-              </List>
-            </Card>
-          </Grid>
-          <Grid item md={3} xs={12}>
-            <Card className={classes.section}>
-              <List>
-                <ListItem>
-                  <Typography variant="h2">Order Summary</Typography>
-                </ListItem>
-                <ListItem>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <Typography>Items:</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Typography align="right">₦{itemsPrice}</Typography>
-                    </Grid>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </ListItem>
+            </List>
+          </Card>
+        </Grid>
+        <Grid item md={3} xs={12}>
+          <Card className={classes.section}>
+            <List>
+              <ListItem>
+                <Typography variant="h2">Order Summary</Typography>
+              </ListItem>
+              <ListItem>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <Typography>Items:</Typography>
                   </Grid>
-                </ListItem>
-                <ListItem>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <Typography>Tax:</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Typography align="right">₦{taxPrice}</Typography>
-                    </Grid>
+                  <Grid item xs={6}>
+                    <Typography align="right">₦{itemsPrice}</Typography>
                   </Grid>
-                </ListItem>
-                <ListItem>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <Typography>Shipping:</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Typography align="right">₦{shippingPrice}</Typography>
-                    </Grid>
+                </Grid>
+              </ListItem>
+              <ListItem>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <Typography>Tax:</Typography>
                   </Grid>
-                </ListItem>
-                <ListItem>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <Typography>
-                        <strong>Total:</strong>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Typography align="right">
-                        <strong>₦{totalPrice}</strong>
-                      </Typography>
-                    </Grid>
+                  <Grid item xs={6}>
+                    <Typography align="right">₦{taxPrice}</Typography>
                   </Grid>
-                </ListItem>
-        
-                  <ListItem>
-                      <div className={classes.fullWidth}>
-                        <PaystackButton {...componentProps} 
-                        variant="contained"
-                        color="primary"
-                        fullWidth 
-                        createOrder={createOrder}
-                        handlePaystackSuccessAction={handlePaystackSuccessAction}
-                        onError={onError}
-                        >
-                          PAY NOW
-                        </PaystackButton>
-                      </div>
-                  </ListItem>
-                
-                {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                  <ListItem>
-                    {loadingDeliver && <CircularProgress />}
-                    <Button
-                      fullWidth
+                </Grid>
+              </ListItem>
+              <ListItem>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <Typography>Shipping:</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography align="right">₦{shippingPrice}</Typography>
+                  </Grid>
+                </Grid>
+              </ListItem>
+              <ListItem>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <Typography>
+                      <strong>Total:</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography align="right">
+                      <strong>₦{totalPrice}</strong>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </ListItem>
+      
+                <ListItem>
+                    <div className={classes.fullWidth}>
+                      <PaystackButton {...componentProps} 
                       variant="contained"
                       color="primary"
-                      onClick={deliverOrderHandler}
-                    >
-                      Deliver Order
-                    </Button>
-                  </ListItem>
-                )}
-              </List>
-            </Card>
-          </Grid>
+                      fullWidth 
+                      createOrder={createOrder}
+                      handlePaystackSuccessAction={handlePaystackSuccessAction}
+                      onError={onError}
+                      >
+                        PAY NOW
+                      </PaystackButton>
+                    </div>
+                </ListItem>
+              
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListItem>
+                  {loadingDeliver && <CircularProgress />}
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={deliverOrderHandler}
+                  >
+                    Deliver Order
+                  </Button>
+                </ListItem>
+              )}
+            </List>
+          </Card>
         </Grid>
-      )}
-    </Layout>
-  );
+      </Grid>
+    )}
+  </Layout>
+);
 }
-
 export async function getServerSideProps({ params }) {
-  return { props: { params } };
+return { props: { params } };
 }
-
 export default dynamic(() => Promise.resolve(Order), { ssr: false });
