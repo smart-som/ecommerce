@@ -29,7 +29,6 @@ export default function Home(props) {
   };
   return (
     <Layout>
-
       <Carousel className={classes.Carousel} animation="slide">
         {featuredProducts.map((product) => (
           <NextLink
@@ -47,7 +46,7 @@ export default function Home(props) {
           </NextLink>
         ))}
       </Carousel>
-      
+
       <br />
 
       <Typography variant="h2">Popular Products</Typography>

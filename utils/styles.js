@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { ArrowRightRounded } from '@material-ui/icons';
+// import { ArrowRightRounded } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
   navbar: {
     backgroundColor: '#2E8BC0',
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Carousel: {
     marginTop: '1rem',
-    height: '30vh', 
+    height: '85vh', 
  },
   grow: {
     flexGrow: 1,
