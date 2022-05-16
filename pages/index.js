@@ -1,15 +1,15 @@
-import NextLink from 'next/link';
-import { Grid, Link, Typography } from '@material-ui/core';
-import Layout from '../components/Layout';
-import db from '../utils/db';
-import Product from '../models/Product';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import { Store } from '../utils/Store';
-import ProductItem from '../components/ProductItem';
-import Carousel from 'react-material-ui-carousel';
-import useStyles from '../utils/styles';
+import NextLink from "next/link";
+import { Grid, Link, Typography } from "@material-ui/core";
+import Layout from "../components/Layout";
+import db from "../utils/db";
+import Product from "../models/Product";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { Store } from "../utils/Store";
+import ProductItem from "../components/ProductItem";
+import Carousel from "react-material-ui-carousel";
+import useStyles from "../utils/styles";
 
 export default function Home(props) {
   const classes = useStyles();
@@ -21,16 +21,16 @@ export default function Home(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("Sorry. Product is out of stock");
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart');
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
   return (
     <Layout>
-      <div>
-      <Carousel className={classes.mt1} animation="slide">
+
+      <Carousel className={classes.Carousel} animation="slide">
         {featuredProducts.map((product) => (
           <NextLink
             key={product._id}
@@ -38,17 +38,16 @@ export default function Home(props) {
             passHref
           >
             <Link>
-            
               <img
                 src={product.featuredImage}
                 alt={product.name}
-                className={classes.featuredImages}
+                className={classes.featuredImage}
               ></img>
             </Link>
           </NextLink>
         ))}
       </Carousel>
-      </div>
+      
       <br />
 
       <Typography variant="h2">Popular Products</Typography>
@@ -70,11 +69,11 @@ export async function getServerSideProps() {
   await db.connect();
   const featuredProductsDocs = await Product.find(
     { isFeatured: true },
-    '-reviews'
+    "-reviews"
   )
     .lean()
     .limit(3);
-  const topRatedProductsDocs = await Product.find({}, '-reviews')
+  const topRatedProductsDocs = await Product.find({}, "-reviews")
     .lean()
     .sort({
       rating: -1,

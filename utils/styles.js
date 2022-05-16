@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '1rem',
   },
+  Carousel: {
+    marginTop: '1rem',
+    height: '30vh', 
+ },
   grow: {
     flexGrow: 1,
   },
