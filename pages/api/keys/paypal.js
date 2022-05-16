@@ -4,7 +4,7 @@ import { isAuth } from '../../../utils/auth';
 const handler = nc();
 handler.use(isAuth);
 handler.get(async (req, res) => {
-  res.send(process.env.publicKey || 'sb');
+  const Paystack = require( Paystack-endpoint)(process.env.secret)
 });
 
 export default handler;

@@ -29,6 +29,7 @@ export default function Home(props) {
   };
   return (
     <Layout>
+      <div>
       <Carousel className={classes.mt1} animation="slide">
         {featuredProducts.map((product) => (
           <NextLink
@@ -37,22 +38,23 @@ export default function Home(props) {
             passHref
           >
             <Link>
+            
               <img
                 src={product.featuredImage}
                 alt={product.name}
-                className={classes.featuredImage}
+                className={classes.featuredImages}
               ></img>
             </Link>
           </NextLink>
         ))}
       </Carousel>
+      </div>
       <br />
-      <br />
-      <br />
+
       <Typography variant="h2">Popular Products</Typography>
       <Grid container spacing={3}>
         {topRatedProducts.map((product) => (
-          <Grid item md={4} key={product.name}>
+          <Grid item xs={6} sm={4} md={3} key={product.name}>
             <ProductItem
               product={product}
               addToCartHandler={addToCartHandler}
@@ -77,7 +79,7 @@ export async function getServerSideProps() {
     .sort({
       rating: -1,
     })
-    .limit(6);
+    .limit(9);
   await db.disconnect();
   return {
     props: {
