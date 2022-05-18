@@ -25,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
   marginBottom: 10,
   color: '#ffffff',
  },
+ button : {
+  background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
+  color: '#ffffff',
+ },
   grow: {
     flexGrow: 1,
   },

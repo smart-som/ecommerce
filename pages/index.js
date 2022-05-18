@@ -37,7 +37,7 @@ export default function Home(props) {
         </h2>
         <br />
         <Button
-          className={classes.iconButton}
+          className={classes.button}
           onClick={() => router.push('/register')}
         >
           OPEN AN ACCOUNT 
