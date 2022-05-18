@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-// import { ArrowRightRounded } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
   navbar: {
     backgroundColor: '#2E8BC0',
@@ -14,7 +13,17 @@ const useStyles = makeStyles((theme) => ({
   },
   Carousel: {
     marginTop: '1rem',
-    height: '85vh', 
+    height: '85vh',
+    background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
+    textAlign: 'center',
+    alignItems: 'center',
+ },
+ headertext: {
+  fontWeight: 'bold',
+  fontSize: '30px',
+  paddingTop: 190,
+  marginBottom: 10,
+  color: '#ffffff',
  },
   grow: {
     flexGrow: 1,
@@ -92,6 +101,9 @@ const useStyles = makeStyles((theme) => ({
   sort: {
     marginRight: 5,
   },
+  banner: {
+    height: '85vh',
+  }
  
 }));
 export default useStyles;
