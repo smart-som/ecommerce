@@ -1,4 +1,3 @@
-import NextLink from "next/link";
 import { Grid, Link, Typography,  Button, } from "@material-ui/core";
 import Layout from "../components/Layout";
 import db from "../utils/db";
@@ -8,7 +7,6 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { Store } from "../utils/Store";
 import ProductItem from "../components/ProductItem";
-import Carousel from "react-material-ui-carousel";
 import useStyles from "../utils/styles";
 
 export default function Home(props) {

@@ -36,6 +36,7 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 import { useEffect } from "react";
+// import Footer from './Footer';
 
 export default function Layout({ title, description, children }) {
   const router = useRouter();
@@ -283,6 +284,7 @@ export default function Layout({ title, description, children }) {
         <Container className={classes.main}>{children}</Container>
         
         <hr />
+        {/* <Footer /> */}
         <footer className={classes.footer}>
           <Typography>
             LIB SYSTEM © 2022

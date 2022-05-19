@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
   },
   Carousel: {
-    marginTop: '1rem',
+    // marginTop: '1rem',
     height: '85vh',
     background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
     backgroundImage: `url(/../images/banner1.jpg)`,
@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
  button : {
   backgroundColor: '#000000',
   color: '#ffffff',
+  '& ::hover': {
+    color: '#000000',
+    backgroundColor: '#ffffff',
+  },
  },
   grow: {
     flexGrow: 1,
@@ -87,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchForm: {
-    // border: '1px solid #ffffff',
+    border: '1px solid #ffffff',
     backgroundColor: '#ffffff',
     borderRadius: 5,
   },
