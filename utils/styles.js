@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1rem',
     height: '85vh',
     background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
+    backgroundImage: `url(/../images/banner1.jpg)`,
+    backgroundPosition: 'center', 
+    backgroundSize: 'cover', 
+    backgroundRepeat: 'no-repeat',
     textAlign: 'center',
     alignItems: 'center',
  },
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   color: '#ffffff',
  },
  button : {
-  background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
+  backgroundColor: '#000000',
   color: '#ffffff',
  },
   grow: {

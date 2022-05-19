@@ -33,7 +33,7 @@ export default function Home(props) {
         <h2 className={classes.headertext}>
           The best site to get accessories for your <br />
           <b>MOBILE AND LAPTOP</b> <br />
-          Open an account now and start shopping now.
+          Open an account and start shopping now.
         </h2>
         <br />
         <Button
