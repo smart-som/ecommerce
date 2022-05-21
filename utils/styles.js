@@ -12,16 +12,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
   },
   Carousel: {
-    // marginTop: '1rem',
     height: '85vh',
     background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
-    backgroundImage: `url(/../images/banner1.jpg)`,
+    backgroundColor: 'rgba(0,0,0,0.25)',
+    opacity: 0.6,
+    backgroundImage: `url(/../images/banner2.jpg)`,
     backgroundPosition: 'center', 
     backgroundSize: 'cover', 
     backgroundRepeat: 'no-repeat',
     textAlign: 'center',
     alignItems: 'center',
  },
+
  headertext: {
   fontWeight: 'bold',
   fontSize: '30px',
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   marginBottom: 10,
   color: '#ffffff',
  },
+
  button : {
   backgroundColor: '#000000',
   color: '#ffffff',

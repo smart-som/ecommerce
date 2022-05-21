@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.7.1",
     "cloudinary": "^1.29.0",
+    "express": "^4.18.1",
     "flutterwave-node": "^1.2.2",
     "font-awesome": "^4.7.0",
     "js-cookie": "^3.0.1",
