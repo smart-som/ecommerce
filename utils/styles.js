@@ -11,17 +11,22 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '1rem',
   },
+
   Carousel: {
-    height: '85vh',
-    background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
-    backgroundColor: 'rgba(0,0,0,0.25)',
-    opacity: 0.6,
-    backgroundImage: `url(/../images/banner2.jpg)`,
+    height: '85vh', 
+    backgroundImage: `url(/../images/banner2.jpg) `,
     backgroundPosition: 'center', 
     backgroundSize: 'cover', 
     backgroundRepeat: 'no-repeat',
-    textAlign: 'center',
-    alignItems: 'center',
+    borderRadius: '20px',
+    // opacity: 0.6,
+ },
+
+ Container: {
+  height: '85vh',
+  textAlign: 'center',
+  alignItems: 'center',
+  color: '#ffffff',
  },
 
  headertext: {
@@ -118,6 +123,22 @@ const useStyles = makeStyles((theme) => ({
   },
   banner: {
     height: '85vh',
+  },
+
+  paystackButton: {
+    cursor: 'pointer',
+    textAlign: 'center',
+    fontSize: '20px',
+    letterSpacing: '0.1rem',
+    textTransform: 'uppercase',
+    backgroundColor: '#7EC8E3',
+    fontWeight: 'bold',
+    color: '#e0eafc',
+    border: 'none',
+    borderRadius: '5px',
+    width: '100%',
+    height: '45px',
+    marginTop: '40px',
   }
  
 }));

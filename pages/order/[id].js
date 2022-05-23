@@ -73,6 +73,7 @@ function Order({ params }) {
     order: {},
     error: "",
   });
+
   const {
     shippingAddress,
     paymentMethod,
@@ -85,6 +86,9 @@ function Order({ params }) {
     paidAt,
     isDelivered,
     deliveredAt,
+    email,
+    phone_number,
+    full_Name,
   } = order;
   useEffect(() => {
     if (!userInfo) {
@@ -134,7 +138,7 @@ function Order({ params }) {
 
   const config = {
     reference: new Date().getTime().toString(),
-    email: "user@email.com",
+    email: email,
     amount: totalPrice * 100,
     publicKey: "pk_test_61345d9fe9b6ab58ecd8ad355b3a076e521bbb31",
   };
@@ -366,7 +370,8 @@ function Order({ params }) {
 
                 <ListItem>
                   <div className={classes.fullWidth}>
-                    <PaystackButton
+                    <PaystackButton className={classes.paystackButton}
+                    
                       {...componentProps}
                       variant="contained"
                       color="primary"

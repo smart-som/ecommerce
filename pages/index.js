@@ -1,4 +1,4 @@
-import { Grid, Link, Typography,  Button, } from "@material-ui/core";
+import { Grid, Link, Typography, Button } from "@material-ui/core";
 import Layout from "../components/Layout";
 import db from "../utils/db";
 import Product from "../models/Product";
@@ -28,18 +28,20 @@ export default function Home(props) {
   return (
     <Layout>
       <div className={classes.Carousel}>
-        <h2 className={classes.headertext}>
-          The best site to get accessories for your <br />
-          <b>MOBILE AND LAPTOP</b> <br />
-          Open an account and start shopping now.
-        </h2>
-        <br />
-        <Button
-          className={classes.button}
-          onClick={() => router.push('/register')}
-        >
-          OPEN AN ACCOUNT 
-        </Button>
+        <div className={classes.Container}>
+          <h2 className={classes.headertext}>
+            The best site to get accessories for your <br />
+            <b>MOBILE AND LAPTOP</b> <br />
+            Open an account and start shopping now.
+          </h2>
+          <br />
+          <Button
+            className={classes.button}
+            onClick={() => router.push("/register")}
+          >
+            OPEN AN ACCOUNT
+          </Button>
+        </div>
       </div>
 
       <br />

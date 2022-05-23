@@ -43,6 +43,9 @@ function PlaceOrder() {
   const taxPrice = itemsPrice < 200000 ? 0 : 15;
   const shippingPrice = round2(itemsPrice * 0.01);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+  const email = shippingAddress.email;
+  const phone_number = shippingAddress.phoneNumber;
+  const full_Name = shippingAddress.fullName;
   
   useEffect(() => {
     if (!paymentMethod) {
@@ -69,6 +72,9 @@ function PlaceOrder() {
           shippingPrice,
           taxPrice,
           totalPrice,
+          email,
+          phone_number,
+          full_Name
         },
         {
           headers: {
