@@ -3,7 +3,10 @@ import Order from '../../../../models/Order';
 import db from '../../../../utils/db';
 import onError from '../../../../utils/error';
 import { isAuth } from '../../../../utils/auth';
+import paystack from "paystack";
 
+
+var paystack = require(paystack)(secret_key);
 const handler = nc({
   onError,
 });
@@ -16,7 +19,7 @@ handler.put(async (req, res) => {
     order.paidAt = Date.now();
     order.paymentResult = {
       id: req.body.id,
-      status: req.body.status,
+      status: req.body.Message,
       email_address: req.email,
     };
     const paidOrder = await order.save();
@@ -27,5 +30,4 @@ handler.put(async (req, res) => {
     res.status(404).send({ message: 'order not found' });
   }
 });
-
 export default handler;

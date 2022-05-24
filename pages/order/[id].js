@@ -138,12 +138,14 @@ function Order({ params }) {
 
   const config = {
     reference: new Date().getTime().toString(),
+    name: full_Name,
+    phone: phone_number,
     email: email,
     amount: totalPrice * 100,
     publicKey: "pk_test_61345d9fe9b6ab58ecd8ad355b3a076e521bbb31",
   };
 
-  function handlePaystackSuccessAction(data, actions) {
+  function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch({ type: "PAY_REQUEST" });
@@ -162,22 +164,16 @@ function Order({ params }) {
       }
     });
   }
-
-  const handlePaystackCloseAction = () => {
-    // enqueueSnackbar(getError(err), { variant: 'error' });
-    console.log("closed");
-  };
-
   function onError(err) {
     enqueueSnackbar(getError(err), { variant: "error" });
   }
-
+  
   const componentProps = {
     ...config,
-    onSuccess: (reference) => handlePaystackSuccessAction(reference),
-    onClose: handlePaystackCloseAction,
+    onApprove: (action) => onApprove(action),
+    onError:onError ,
   };
-
+ 
   async function deliverOrderHandler() {
     try {
       dispatch({ type: "DELIVER_REQUEST" });
@@ -194,7 +190,7 @@ function Order({ params }) {
       dispatch({ type: "DELIVER_FAIL", payload: getError(err) });
       enqueueSnackbar(getError(err), { variant: "error" });
     }
-  };
+  }
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -370,14 +366,14 @@ function Order({ params }) {
 
                 <ListItem>
                   <div className={classes.fullWidth}>
-                    <PaystackButton className={classes.paystackButton}
-                    
+                    <PaystackButton
+                      className={classes.paystackButton}
                       {...componentProps}
                       variant="contained"
                       color="primary"
                       fullWidth
                       createOrder={createOrder}
-                      handlePaystackSuccessAction={handlePaystackSuccessAction}
+                      onApprove={onApprove}
                       onError={onError}
                     >
                       PAY NOW
