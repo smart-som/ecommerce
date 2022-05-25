@@ -3,7 +3,6 @@ import Order from '../../../../models/Order';
 import db from '../../../../utils/db';
 import onError from '../../../../utils/error';
 import { isAuth } from '../../../../utils/auth';
-import paystack from "paystack";
 
 
 var paystack = require(paystack)(secret_key);
