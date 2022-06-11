@@ -136,7 +136,6 @@ function Order({ params }) {
       });
   }
 
-  // paystack payment handler
   const config = {
     reference: new Date().getTime().toString(),
     name: full_Name,
@@ -151,7 +150,7 @@ function Order({ params }) {
       try {
         dispatch({ type: "PAY_REQUEST" });
         const { data } = await axios.put(
-          `/api/key/paystack`,
+          `/api/orders/${order._id}/pay`,
           details,
           {
             headers: { authorization: `Bearer ${userInfo.token}` },

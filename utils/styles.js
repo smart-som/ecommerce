@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
   Carousel: {
     height: '85vh', 
-    backgroundImage: `url(/../images/bqnner.jpg) `,
+    backgroundImage: `url(/../images/banner2.jpg) `,
     backgroundPosition: 'center', 
     backgroundSize: 'cover', 
     backgroundRepeat: 'no-repeat',
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
  headertext: {
   fontWeight: 'bold',
-  fontSize: '35px',
+  fontSize: '30px',
   paddingTop: 190,
   marginBottom: 10,
   color: '#ffffff',
